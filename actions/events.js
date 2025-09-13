@@ -108,3 +108,14 @@ export async function getEventDetails(username, eventId) {
 
   return event;
 }
+export async function getAllPublicEvents() {
+  const events = await db.event.findMany({
+    where: { isPrivate: false },
+    orderBy: { createdAt: "desc" },
+    include: {
+      user: true,
+      _count: { select: { bookings: true } },
+    },
+  });
+  return events;
+}

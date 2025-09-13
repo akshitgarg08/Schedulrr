@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Calendar, BarChart, Users, Clock } from "lucide-react";
+import { Calendar, BarChart, Users, Clock, Bell } from "lucide-react";
 import { BarLoader } from "react-spinners";
 import { useUser } from "@clerk/nextjs";
 
@@ -11,6 +11,7 @@ const navItems = [
   { href: "/events", label: "Events", icon: Calendar },
   { href: "/meetings", label: "Meetings", icon: Users },
   { href: "/availability", label: "Availability", icon: Clock },
+  { href: "/public-events", label: "Public Events", icon: Bell },
 ];
 
 export default function AppLayout({ children }) {
