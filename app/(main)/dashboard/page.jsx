@@ -13,6 +13,7 @@ import useFetch from "@/hooks/use-fetch";
 import { usernameSchema } from "@/app/lib/validators";
 import { getLatestUpdates } from "@/actions/dashboard";
 import { format } from "date-fns";
+import CopyUrlButton from "./_components/copy-url-button";
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
@@ -21,6 +22,7 @@ export default function DashboardPage() {
     register,
     handleSubmit,
     setValue,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(usernameSchema),
@@ -91,6 +93,7 @@ export default function DashboardPage() {
               <div className="flex items-center gap-2">
                 <span>{window?.location.origin}/</span>
                 <Input {...register("username")} placeholder="username" />
+                <CopyUrlButton username={watch("username") || user?.username} />
               </div>
               {errors.username && (
                 <p className="text-red-500 text-sm mt-1">
