@@ -6,7 +6,7 @@ import { google } from "googleapis";
 
 export async function createBooking(bookingData) {
   try {
-    // Fetch the event and its creator
+
     const event = await db.event.findUnique({
       where: { id: bookingData.eventId },
       include: { user: true },
@@ -16,7 +16,17 @@ export async function createBooking(bookingData) {
       throw new Error("Event not found");
     }
 
-    // Get the event creator's Google OAuth token from Clerk
+    const overlapping = await db.booking.findFirst({
+      where: {
+        eventId: event.id,
+        startTime: { lt: bookingData.endTime }, // existing booking's start < new end
+        endTime: { gt: bookingData.startTime }, // existing booking's end > new start
+      },
+    });
+
+if (overlapping) {
+  throw new Error("This time slot has already been booked.");
+}
     const { data } = await clerkClient.users.getUserOauthAccessToken(
       event.user.clerkUserId,
       "oauth_google"
@@ -28,7 +38,7 @@ export async function createBooking(bookingData) {
       throw new Error("Event creator has not connected Google Calendar");
     }
 
-    // Set up Google OAuth client
+
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: token });
 

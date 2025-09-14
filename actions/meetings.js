@@ -42,9 +42,15 @@ export async function getUserMeetings(type = "upcoming") {
     },
   });
 
-  return meetings;
-}
+  // Add local time fields to each meeting object
+  const meetingsWithLocalTime = meetings.map(meeting => ({
+    ...meeting,
+    localStartTime: new Date(meeting.startTime).toLocaleString(),
+    localEndTime: new Date(meeting.endTime).toLocaleString(),
+  }));
 
+  return meetingsWithLocalTime;
+}
 export async function cancelMeeting(meetingId) {
   const { userId } = auth();
   if (!userId) {
