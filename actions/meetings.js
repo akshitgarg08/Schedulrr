@@ -42,14 +42,7 @@ export async function getUserMeetings(type = "upcoming") {
     },
   });
 
-  // Add local time fields to each meeting object
-  const meetingsWithLocalTime = meetings.map(meeting => ({
-    ...meeting,
-    localStartTime: new Date(meeting.startTime).toLocaleString(),
-    localEndTime: new Date(meeting.endTime).toLocaleString(),
-  }));
-
-  return meetingsWithLocalTime;
+  return meetings;
 }
 export async function cancelMeeting(meetingId) {
   const { userId } = auth();
@@ -74,7 +67,6 @@ export async function cancelMeeting(meetingId) {
     throw new Error("Meeting not found or unauthorized");
   }
 
-  // Cancel the meeting in Google Calendar
   const { data } = await clerkClient.users.getUserOauthAccessToken(
     meeting.user.clerkUserId,
     "oauth_google"
@@ -96,7 +88,6 @@ export async function cancelMeeting(meetingId) {
     console.error("Failed to delete event from Google Calendar:", error);
   }
 
-  // Delete the meeting from the database
   await db.booking.delete({
     where: { id: meetingId },
   });

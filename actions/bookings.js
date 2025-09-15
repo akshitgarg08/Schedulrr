@@ -19,8 +19,8 @@ export async function createBooking(bookingData) {
     const overlapping = await db.booking.findFirst({
       where: {
         eventId: event.id,
-        startTime: { lt: bookingData.endTime }, // existing booking's start < new end
-        endTime: { gt: bookingData.startTime }, // existing booking's end > new start
+        startTime: { lt: bookingData.endTime }, 
+        endTime: { gt: bookingData.startTime }, 
       },
     });
 
@@ -44,7 +44,7 @@ if (overlapping) {
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 
-    // Create Google Meet link
+
     const meetResponse = await calendar.events.insert({
       calendarId: "primary",
       conferenceDataVersion: 1,
@@ -63,7 +63,6 @@ if (overlapping) {
     const meetLink = meetResponse.data.hangoutLink;
     const googleEventId = meetResponse.data.id;
 
-    // Create booking in database
     const booking = await db.booking.create({
       data: {
         eventId: event.id,

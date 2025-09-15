@@ -31,7 +31,6 @@ export async function getUserAvailability() {
     return null;
   }
 
-  // Transform the availability data into the format expected by the form
   const availabilityData = { timeGap: user.availability.timeGap };
 
   [
@@ -80,7 +79,7 @@ export async function updateAvailability(data) {
   const availabilityData = Object.entries(data).flatMap(
     ([day, { isAvailable, startTime, endTime }]) => {
       if (isAvailable) {
-        const baseDate = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+        const baseDate = new Date().toISOString().split("T")[0]; 
 
         return [
           {
@@ -149,8 +148,7 @@ export async function getEventAvailability(eventId) {
 
   const { availability, bookings } = event.user;
   const startDate = startOfDay(new Date());
-  const endDate = addDays(startDate, 30); // Get availability for the next 30 days
-
+  const endDate = addDays(startDate, 30); 
   const availableDates = [];
 
   for (let date = startDate; date <= endDate; date = addDays(date, 1)) {
@@ -197,7 +195,6 @@ function generateAvailableTimeSlots(
     `${dateStr}T${endTime.toISOString().slice(11, 16)}`
   );
 
-  // If the date is today, start from the next available slot after the current time
   const now = new Date();
   if (format(now, "yyyy-MM-dd") === dateStr) {
     currentTime = isBefore(currentTime, now)

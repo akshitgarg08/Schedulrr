@@ -25,7 +25,7 @@ export default function EventCard({ event, username, isPublic = false }) {
         `${window?.location.origin}/${username}/${event.id}`
       );
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000); 
     } catch (err) {
       console.error("Failed to copy: ", err);
     }

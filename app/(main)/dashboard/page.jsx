@@ -30,7 +30,6 @@ export default function DashboardPage() {
 
   useEffect(() => {
     setValue("username", user?.username);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded]);
 
   const {

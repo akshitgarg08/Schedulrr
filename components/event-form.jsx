@@ -38,7 +38,7 @@ const EventForm = ({ onSubmitForm, initialData = {} }) => {
   const onSubmit = async (data) => {
     await fnCreateEvent(data);
     if (!loading && !error) onSubmitForm();
-    router.refresh(); // Refresh the page to show updated data
+    router.refresh(); 
   };
 
   return (

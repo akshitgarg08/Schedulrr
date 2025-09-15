@@ -1,4 +1,4 @@
-// app/[username]/[eventId]/page.jsx
+
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getEventDetails } from "@/actions/events";

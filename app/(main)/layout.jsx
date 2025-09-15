@@ -43,7 +43,6 @@ export default function AppLayout({ children }) {
           </nav>
         </aside>
 
-        {/* Main content */}
         <main className="flex-1 overflow-y-auto p-4 md:p-8">
           <header className="flex justify-between items-center mb-4">
             <h2 className="text-5xl md:text-6xl gradient-title pt-2 md:pt-0 text-center md:text-left w-full">
@@ -54,7 +53,6 @@ export default function AppLayout({ children }) {
           {children}
         </main>
 
-        {/* Bottom tabs for small screens */}
         <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-md">
           <ul className="flex justify-around">
             {navItems.map((item) => (
